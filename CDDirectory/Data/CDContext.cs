@@ -8,6 +8,7 @@ namespace CDDirectory.Data
         public CDContext(DbContextOptions<CDContext> options) : base(options) {
 
         }
-        public DbSet<CD> CD { get; set; }
+        public DbSet<CD> CD => Set<CD>();
+        public DbSet<Artist> Artist => Set<Artist>();
     }
 }

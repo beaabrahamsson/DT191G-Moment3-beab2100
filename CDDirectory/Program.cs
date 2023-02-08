@@ -1,5 +1,6 @@
 using CDDirectory.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,9 @@ builder.Services.AddControllersWithViews();
 
 //DB Connections
 builder.Services.AddDbContext<CDContext>(options =>
+options.UseSqlite(builder.Configuration.GetConnectionString("DefaultDbString")));
+
+builder.Services.AddDbContext<ArtistContext>(options =>
 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultDbString")));
 
 var app = builder.Build();

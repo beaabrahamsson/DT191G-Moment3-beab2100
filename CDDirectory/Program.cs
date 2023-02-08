@@ -14,6 +14,9 @@ options.UseSqlite(builder.Configuration.GetConnectionString("DefaultDbString")))
 builder.Services.AddDbContext<ArtistContext>(options =>
 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultDbString")));
 
+builder.Services.AddDbContext<UserContext>(options =>
+options.UseSqlite(builder.Configuration.GetConnectionString("DefaultDbString")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -19,7 +19,7 @@ namespace CDDirectory.Controllers
             _context = context;
         }
 
-        // GET: CD
+// GET: CD
         public async Task<IActionResult> Index(string searchString)
         {
             if (_context.CD == null)
@@ -67,6 +67,7 @@ namespace CDDirectory.Controllers
         public IActionResult Create()
         {
             ViewData["ArtistId"] = new SelectList(_context.Artist, "ArtistId", "ArtistId");
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId");
             return View();
         }
 
@@ -75,7 +76,7 @@ namespace CDDirectory.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CDId,Title,Genre,ArtistId")] CD cD)
+        public async Task<IActionResult> Create([Bind("CDId,Title,Genre,ArtistId,UserId")] CD cD)
         {
             if (ModelState.IsValid)
             {
@@ -84,6 +85,7 @@ namespace CDDirectory.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ArtistId"] = new SelectList(_context.Artist, "ArtistId", "ArtistId", cD.ArtistId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId", cD.UserId);
             return View(cD);
         }
 
@@ -101,6 +103,7 @@ namespace CDDirectory.Controllers
                 return NotFound();
             }
             ViewData["ArtistId"] = new SelectList(_context.Artist, "ArtistId", "ArtistId", cD.ArtistId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId", cD.UserId);
             return View(cD);
         }
 
@@ -109,7 +112,7 @@ namespace CDDirectory.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CDId,Title,Genre,ArtistId")] CD cD)
+        public async Task<IActionResult> Edit(int id, [Bind("CDId,Title,Genre,ArtistId,UserId")] CD cD)
         {
             if (id != cD.CDId)
             {
@@ -137,6 +140,7 @@ namespace CDDirectory.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ArtistId"] = new SelectList(_context.Artist, "ArtistId", "ArtistId", cD.ArtistId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId", cD.UserId);
             return View(cD);
         }
 
@@ -150,6 +154,7 @@ namespace CDDirectory.Controllers
 
             var cD = await _context.CD
                 .Include(c => c.Artist)
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.CDId == id);
             if (cD == null)
             {

@@ -14,5 +14,6 @@ namespace CDDirectory.Data
         }
         public DbSet<CD> CD => Set<CD>();
         public DbSet<Artist> Artist => Set<Artist>();
+        
     }
 }

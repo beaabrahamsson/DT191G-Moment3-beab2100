@@ -20,10 +20,28 @@ namespace CDDirectory.Controllers
         }
 
         // GET: CD
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var cDContext = _context.CD.Include(c => c.Artist);
-            return View(await cDContext.ToListAsync());
+            if (_context.CD == null)
+        {
+            return Problem("Entity set 'CDContext.CD'  is null.");
+        }
+
+        var cds = from m in _context.CD
+                    select m;
+        cds = _context.CD.Include(c => c.Artist);
+
+        if (!String.IsNullOrEmpty(searchString))
+        {
+            cds = cds
+            .Include(c => c.Artist)
+            .Where(s => s.Title!.Contains(searchString));
+        }
+
+        return View(await cds.ToListAsync());
+
+            //
+            //return View(await cDContext.ToListAsync());
         }
 
         // GET: CD/Details/5

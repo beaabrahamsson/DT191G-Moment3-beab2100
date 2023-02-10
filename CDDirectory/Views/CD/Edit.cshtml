@@ -31,7 +31,7 @@
             <div class="form-group">
                 <label asp-for="UserId" class="control-label"></label>
                 <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId">
-                    <option value="none" selected disabled hidden>Välj användare</option>
+                    <option value="">Välj användare</option>
                 </select>
                 <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
